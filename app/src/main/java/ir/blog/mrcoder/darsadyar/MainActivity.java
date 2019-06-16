@@ -2,13 +2,16 @@ package ir.blog.mrcoder.darsadyar;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.EditText;
@@ -23,6 +26,8 @@ public class MainActivity extends Activity {
     private EditText kolET, nazadeET, ghalatET, dorostET;
     private int kol = -1, nazade = -1, ghalat = -1, dorost = -1;
     private static final long ANIMATION_TIME = 250;
+
+    private static final int REQ_REMOVE_ADS = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -237,7 +242,7 @@ public class MainActivity extends Activity {
     }
 
     private void setPercent(final String value) {
-        Animation animation = new AlphaAnimation(1f,0f);
+        Animation animation = new AlphaAnimation(1f, 0f);
         animation.setDuration(ANIMATION_TIME);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -311,5 +316,27 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onRemoveAdsClicked(View view) {
+        Intent intent = new Intent(this.getApplicationContext(), PaymentActivity.class);
+        startActivityForResult(intent, REQ_REMOVE_ADS);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQ_REMOVE_ADS && resultCode == RESULT_OK)
+            removeAdsIfPaid();
+
+    }
+
+    private void removeAdsIfPaid() {
+        boolean isAdDisabled = PaymentHelper.IsAdDisabled(this);
+        if (isAdDisabled)
+            Adad.disableBannerAds();
+        else
+            Adad.enableBannerAds();
     }
 }
