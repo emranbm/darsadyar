@@ -11,11 +11,16 @@
     tools:context="ir.blog.mrcoder.darsadyar.AboutActivity"
     android:background="#000000">
 
+    <ImageView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/ic_launcher"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Darsad Yar 1.1"
+        android:text="Darsad Yar 1.2"
         android:layout_gravity="center"
         android:textColor="#FFFFFF"
         android:textSize="32sp"
@@ -36,7 +41,6 @@
         android:layout_gravity="center"
         android:text="Mr. Coder"
         android:clickable="true"
-        android:onClick="webClicked"
         android:textColor="#FFFFFF"
         android:textSize="26sp" />
 
@@ -54,16 +58,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="emran.bm@gmail.com"
-        android:textColor="#FFFFFF"
-        android:textSize="21sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="mrcoder.blog.ir"
-        android:clickable="true"
-        android:onClick="webClicked"
         android:textColor="#FFFFFF"
         android:textSize="21sp" />
 

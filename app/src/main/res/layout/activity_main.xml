@@ -25,11 +25,20 @@
         android:id="@+id/removeAdsIV"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
         android:src="@drawable/no_ads_button"
         android:onClick="onRemoveAdsClicked"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/menuBtn"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@android:drawable/ic_dialog_dialer"
+        android:layout_alignParentRight="true"
+        android:onClick="onMenuBtnClicked"
+        android:layout_marginTop="16dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

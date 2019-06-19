@@ -325,11 +325,6 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onRemoveAdsClicked(View view) {
-        Intent intent = new Intent(this.getApplicationContext(), PaymentActivity.class);
-        startActivityForResult(intent, REQ_REMOVE_ADS);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -348,5 +343,14 @@ public class MainActivity extends Activity {
             Adad.enableBannerAds();
             removeAdsIV.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void onRemoveAdsClicked(View view) {
+        Intent intent = new Intent(this.getApplicationContext(), PaymentActivity.class);
+        startActivityForResult(intent, REQ_REMOVE_ADS);
+    }
+
+    public void onMenuBtnClicked(View view) {
+        openOptionsMenu();
     }
 }
