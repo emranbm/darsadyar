@@ -4,18 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PaymentActivity"
-    android:background="@drawable/background">
+    android:background="@drawable/background_updown"
+    tools:context=".PaymentActivity">
 
     <TextView
         android:id="@+id/removeAdsDescTV"
+        android:layout_width="wrap_content"
+        android:layout_height="418dp"
+        android:layout_above="@+id/paymentBtn"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="100dp"
+        android:gravity="center"
+        android:shadowColor="#222222"
+        android:shadowDx="5"
+        android:shadowDy="5"
+        android:shadowRadius="5"
+        android:text="@string/remove_ads_desc"
+        android:textColor="#ffffff"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/paymentBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:text="@string/remove_ads_desc"
+        android:background="#689f38"
+        android:text="@string/pay"
         android:textSize="20sp"
-        android:gravity="center"
-        android:textColor="#ffffff"
-        android:textStyle="bold"/>
+        android:enabled="false"
+        android:onClick="onPaymentBtnClicked"/>
 
 </RelativeLayout>

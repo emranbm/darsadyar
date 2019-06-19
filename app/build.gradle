@@ -20,10 +20,24 @@ android {
         }
     }
 
-//    compileOptions {
-//        targetCompatibility 1.8
-//        sourceCompatibility 1.8
-//    }
+    flavorDimensions "default"
+
+    productFlavors{
+        original{
+            buildConfigField('String', 'ADAD_BASE64_KEY', "\"" + getAdadBase64Key() + "\"")
+        }
+    }
+
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+}
+
+def getAdadBase64Key() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    return properties.getProperty("adad.key");
 }
 
 dependencies {

@@ -2,11 +2,9 @@ package ir.blog.mrcoder.darsadyar;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -15,15 +13,18 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import ir.adad.client.Adad;
+import ir.blog.mrcoder.darsadyar.utils.PaymentHelper;
 
 public class MainActivity extends Activity {
 
     private TextView kolTV, nazadeTV, ghalatTV, dorostTV, resultTV, cautionTV;
     private EditText kolET, nazadeET, ghalatET, dorostET;
+    private ImageView removeAdsIV;
     private int kol = -1, nazade = -1, ghalat = -1, dorost = -1;
     private static final long ANIMATION_TIME = 250;
 
@@ -39,20 +40,23 @@ public class MainActivity extends Activity {
 
         initialize();
 
+        removeAdsIfPaid();
+
         setListeners();
     }
 
     private void initialize() {
-        kolTV = (TextView) findViewById(R.id.kolTV);
-        nazadeTV = (TextView) findViewById(R.id.nazadeTV);
-        ghalatTV = (TextView) findViewById(R.id.ghalatTV);
-        dorostTV = (TextView) findViewById(R.id.dorostTV);
-        resultTV = (TextView) findViewById(R.id.resultTV);
-        cautionTV = (TextView) findViewById(R.id.cautionTV);
-        kolET = (EditText) findViewById(R.id.kolET);
-        nazadeET = (EditText) findViewById(R.id.nazadeET);
-        ghalatET = (EditText) findViewById(R.id.ghalatET);
-        dorostET = (EditText) findViewById(R.id.dorostET);
+        kolTV = findViewById(R.id.kolTV);
+        nazadeTV = findViewById(R.id.nazadeTV);
+        ghalatTV = findViewById(R.id.ghalatTV);
+        dorostTV = findViewById(R.id.dorostTV);
+        resultTV = findViewById(R.id.resultTV);
+        cautionTV = findViewById(R.id.cautionTV);
+        kolET = findViewById(R.id.kolET);
+        nazadeET = findViewById(R.id.nazadeET);
+        ghalatET = findViewById(R.id.ghalatET);
+        dorostET = findViewById(R.id.dorostET);
+        removeAdsIV = findViewById(R.id.removeAdsIV);
 
         Typeface typeface = Typeface.createFromAsset(getAssets(), "bkoodak.ttf");
 
@@ -327,16 +331,19 @@ public class MainActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQ_REMOVE_ADS && resultCode == RESULT_OK)
+        if (requestCode == REQ_REMOVE_ADS)
             removeAdsIfPaid();
-
     }
 
     private void removeAdsIfPaid() {
         boolean isAdDisabled = PaymentHelper.IsAdDisabled(this);
-        if (isAdDisabled)
+        if (isAdDisabled) {
             Adad.disableBannerAds();
-        else
+            removeAdsIV.setVisibility(View.INVISIBLE);
+        }
+        else {
             Adad.enableBannerAds();
+            removeAdsIV.setVisibility(View.VISIBLE);
+        }
     }
 }

@@ -22,6 +22,7 @@
         android:textSize="36sp" />
 
     <ImageView
+        android:id="@+id/removeAdsIV"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_alignParentRight="true"
