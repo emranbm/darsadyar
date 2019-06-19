@@ -93,7 +93,7 @@ public class PaymentActivity extends AppCompatActivity implements IabHelper.Quer
                 PaymentHelper.SetAdsDisabled(this);
                 setAppropriateTexts();
                 Toast.makeText(this, R.string.ads_removed, Toast.LENGTH_LONG).show();
-
+                finish();
             }
         } else
             Toast.makeText(this, R.string.error_querying_inventory, Toast.LENGTH_LONG).show();
