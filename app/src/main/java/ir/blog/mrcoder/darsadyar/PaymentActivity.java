@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import ir.blog.mrcoder.darsadyar.paymentUtils.IabHelper;
 import ir.blog.mrcoder.darsadyar.paymentUtils.IabResult;
 import ir.blog.mrcoder.darsadyar.paymentUtils.Inventory;
@@ -20,8 +22,6 @@ import ir.blog.mrcoder.darsadyar.utils.PaymentHelper;
  * Created by emran on 6/16/19.
  */
 public class PaymentActivity extends AppCompatActivity implements IabHelper.QueryInventoryFinishedListener, IabHelper.OnIabPurchaseFinishedListener {
-
-    private static final int PRICE = 5000;
 
     private TextView removeAdsDescTV;
     private Button paymentBtn;
@@ -61,7 +61,9 @@ public class PaymentActivity extends AppCompatActivity implements IabHelper.Quer
                 Toast.makeText(this, getString(R.string.problem_connecting_cafebazaar), Toast.LENGTH_LONG).show();
             else {
                 paymentBtn.setEnabled(true);
-                iabHelper.queryInventoryAsync(this);
+                ArrayList<String> lst = new ArrayList<>();
+                lst.add(SKU);
+                iabHelper.queryInventoryAsync(true,lst ,this);
             }
         });
     }
@@ -69,8 +71,10 @@ public class PaymentActivity extends AppCompatActivity implements IabHelper.Quer
     private void setAppropriateTexts() {
         if (PaymentHelper.IsAdDisabled(this))
             removeAdsDescTV.setText(PersianReshape.reshape(getResources().getString(R.string.ads_already_disabled)));
-        else
-            removeAdsDescTV.setText(PersianReshape.reshape(getResources().getString(R.string.remove_ads_desc, PRICE)));
+        else {
+            final String lbl = getResources().getString(R.string.remove_ads_desc);
+            removeAdsDescTV.setText(PersianReshape.reshape(lbl.substring(lbl.indexOf('،') + 1)));
+        }
     }
 
     public void onPaymentBtnClicked(View view) {
@@ -87,6 +91,8 @@ public class PaymentActivity extends AppCompatActivity implements IabHelper.Quer
     @Override
     public void onQueryInventoryFinished(IabResult result, Inventory inv) {
         if (result.isSuccess()) {
+            String price = inv.getSkuDetails(SKU).getPrice();
+            removeAdsDescTV.setText(PersianReshape.reshape(getResources().getString(R.string.remove_ads_desc, price)));
             final boolean hasPaid = inv.hasPurchase(SKU);
             final boolean notDisabledBefore = !PaymentHelper.IsAdDisabled(this);
             if (hasPaid && notDisabledBefore) {
