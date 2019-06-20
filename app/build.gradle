@@ -14,7 +14,7 @@ android {
         applicationId "ir.blog.mrcoder.darsadyar"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 7
+        versionCode 8
         versionName "1.2"
     }
     buildTypes {

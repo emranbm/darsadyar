@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ public class PaymentActivity extends AppCompatActivity implements IabHelper.Quer
 
     private TextView removeAdsDescTV;
     private Button paymentBtn;
+    private ProgressBar loadingPB;
 
     private static final String SKU = "BannerAdsRemoval";
     private static final int REQ_CODE = 1232;
@@ -47,6 +49,7 @@ public class PaymentActivity extends AppCompatActivity implements IabHelper.Quer
     private void initialize() {
         removeAdsDescTV = findViewById(R.id.removeAdsDescTV);
         paymentBtn = findViewById(R.id.paymentBtn);
+        loadingPB = findViewById(R.id.loadingPB);
 
         final Typeface typeface = Typeface.createFromAsset(getAssets(), "bkoodak.ttf");
         removeAdsDescTV.setTypeface(typeface);
@@ -60,7 +63,6 @@ public class PaymentActivity extends AppCompatActivity implements IabHelper.Quer
             if (result.isFailure())
                 Toast.makeText(this, getString(R.string.problem_connecting_cafebazaar), Toast.LENGTH_LONG).show();
             else {
-                paymentBtn.setEnabled(true);
                 ArrayList<String> lst = new ArrayList<>();
                 lst.add(SKU);
                 iabHelper.queryInventoryAsync(true,lst ,this);
@@ -90,6 +92,9 @@ public class PaymentActivity extends AppCompatActivity implements IabHelper.Quer
 
     @Override
     public void onQueryInventoryFinished(IabResult result, Inventory inv) {
+        paymentBtn.setEnabled(true);
+        loadingPB.setVisibility(View.GONE);
+
         if (result.isSuccess()) {
             String price = inv.getSkuDetails(SKU).getPrice();
             removeAdsDescTV.setText(PersianReshape.reshape(getResources().getString(R.string.remove_ads_desc, price)));
