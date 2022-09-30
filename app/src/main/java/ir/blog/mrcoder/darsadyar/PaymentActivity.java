@@ -17,7 +17,6 @@ import ir.blog.mrcoder.darsadyar.paymentUtils.IabHelper;
 import ir.blog.mrcoder.darsadyar.paymentUtils.IabResult;
 import ir.blog.mrcoder.darsadyar.paymentUtils.Inventory;
 import ir.blog.mrcoder.darsadyar.paymentUtils.Purchase;
-import ir.blog.mrcoder.darsadyar.utils.PaymentHelper;
 
 /**
  * Created by emran on 6/16/19.
@@ -29,6 +28,7 @@ public class PaymentActivity extends AppCompatActivity implements IabHelper.Quer
     private ProgressBar loadingPB;
 
     private static final String SKU = "BannerAdsRemoval";
+    private static final String PUBLIC_KEY = "MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwC6uk4g0Zn+cDugzrRo8I0mnQG3wTenSRauSZLJl6n0tp0d62F/113jXBHfzCEOXSP/YILqP6oByNBGy94o7Ka9Zn00YOa6xcD+0qo57cMuERPAJ41rOjVTqwh2HER+kfQhhDoqHYweZDTht40xzdPD5l6ZtvtMnqAPAxv7sLfgPhd44g2yJGLdvDpKQNG6OeY6GeAONRcsxBMhOY3P8mLLhyQTlKA8v5/mJnGabOcCAwEAAQ==";
     private static final int REQ_CODE = 1232;
     private IabHelper iabHelper;
 
@@ -36,13 +36,8 @@ public class PaymentActivity extends AppCompatActivity implements IabHelper.Quer
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
-
         initialize();
-
-        getSupportActionBar().setTitle(R.string.remove_ads);
-
-        setAppropriateTexts();
-
+        getSupportActionBar().setTitle(R.string.title_activity_payment);
         initPayment();
     }
 
@@ -58,25 +53,16 @@ public class PaymentActivity extends AppCompatActivity implements IabHelper.Quer
     }
 
     private void initPayment() {
-        iabHelper = new IabHelper(this, "");
+        iabHelper = new IabHelper(this, PUBLIC_KEY);
         iabHelper.startSetup(result -> {
             if (result.isFailure())
                 Toast.makeText(this, getString(R.string.problem_connecting_cafebazaar), Toast.LENGTH_LONG).show();
             else {
                 ArrayList<String> lst = new ArrayList<>();
                 lst.add(SKU);
-                iabHelper.queryInventoryAsync(true,lst ,this);
+                iabHelper.queryInventoryAsync(true, lst, this);
             }
         });
-    }
-
-    private void setAppropriateTexts() {
-        if (PaymentHelper.IsAdDisabled(this))
-            removeAdsDescTV.setText(PersianReshape.reshape(getResources().getString(R.string.ads_already_disabled)));
-        else {
-            final String lbl = getResources().getString(R.string.remove_ads_desc);
-            removeAdsDescTV.setText(PersianReshape.reshape(lbl.substring(lbl.indexOf('،') + 1)));
-        }
     }
 
     public void onPaymentBtnClicked(View view) {
@@ -97,13 +83,10 @@ public class PaymentActivity extends AppCompatActivity implements IabHelper.Quer
 
         if (result.isSuccess()) {
             String price = inv.getSkuDetails(SKU).getPrice();
-            removeAdsDescTV.setText(PersianReshape.reshape(getResources().getString(R.string.remove_ads_desc, price)));
+            paymentBtn.setText(PersianReshape.reshape(getResources().getString(R.string.pay_price, price)));
             final boolean hasPaid = inv.hasPurchase(SKU);
-            final boolean notDisabledBefore = !PaymentHelper.IsAdDisabled(this);
-            if (hasPaid && notDisabledBefore) {
-                PaymentHelper.SetAdsDisabled(this);
-                setAppropriateTexts();
-                Toast.makeText(this, R.string.ads_removed, Toast.LENGTH_LONG).show();
+            if (hasPaid) {
+                Toast.makeText(this, R.string.payment_successful, Toast.LENGTH_LONG).show();
                 finish();
             }
         } else
@@ -117,8 +100,7 @@ public class PaymentActivity extends AppCompatActivity implements IabHelper.Quer
             return;
         }
 
-        PaymentHelper.SetAdsDisabled(this);
-        Toast.makeText(this, R.string.ads_removed, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.payment_successful, Toast.LENGTH_LONG).show();
         setResult(RESULT_OK);
         finish();
     }

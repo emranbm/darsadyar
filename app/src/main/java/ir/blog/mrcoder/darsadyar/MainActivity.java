@@ -17,17 +17,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ir.blog.mrcoder.darsadyar.utils.PaymentHelper;
-
 public class MainActivity extends Activity {
 
     private TextView kolTV, nazadeTV, ghalatTV, dorostTV, resultTV, cautionTV;
     private EditText kolET, nazadeET, ghalatET, dorostET;
-    private ImageView removeAdsIV;
+    private ImageView donationIV;
     private int kol = -1, nazade = -1, ghalat = -1, dorost = -1;
     private static final long ANIMATION_TIME = 250;
-
-    private static final int REQ_REMOVE_ADS = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +32,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         initialize();
-
-        removeAdsIfPaid();
 
         setListeners();
     }
@@ -53,7 +47,7 @@ public class MainActivity extends Activity {
         nazadeET = findViewById(R.id.nazadeET);
         ghalatET = findViewById(R.id.ghalatET);
         dorostET = findViewById(R.id.dorostET);
-        removeAdsIV = findViewById(R.id.removeAdsIV);
+        donationIV = findViewById(R.id.donationIV);
 
         Typeface typeface = Typeface.createFromAsset(getAssets(), "bkoodak.ttf");
 
@@ -319,27 +313,9 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQ_REMOVE_ADS)
-            removeAdsIfPaid();
-    }
-
-    private void removeAdsIfPaid() {
-        boolean isAdDisabled = PaymentHelper.IsAdDisabled(this);
-        if (isAdDisabled) {
-            removeAdsIV.setVisibility(View.INVISIBLE);
-        }
-        else {
-            removeAdsIV.setVisibility(View.VISIBLE);
-        }
-    }
-
-    public void onRemoveAdsClicked(View view) {
+    public void onDonationClicked(View view) {
         Intent intent = new Intent(this.getApplicationContext(), PaymentActivity.class);
-        startActivityForResult(intent, REQ_REMOVE_ADS);
+        startActivity(intent);
     }
 
     public void onMenuBtnClicked(View view) {

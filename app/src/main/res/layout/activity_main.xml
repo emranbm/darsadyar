@@ -21,14 +21,14 @@
         android:textSize="36sp" />
 
     <ImageView
-        android:id="@+id/removeAdsIV"
+        android:id="@+id/donationIV"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
-        android:src="@drawable/no_ads_button"
-        android:onClick="onRemoveAdsClicked"/>
+        android:src="@drawable/donation_button"
+        android:onClick="onDonationClicked"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/menuBtn"
