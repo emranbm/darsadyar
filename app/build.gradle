@@ -58,9 +58,7 @@ android {
 }
 
 def getAdadBase64Key() {
-    Properties properties = new Properties()
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    return properties.getProperty("adad.key");
+    return "Adad is deprecated!"
 }
 
 dependencies {

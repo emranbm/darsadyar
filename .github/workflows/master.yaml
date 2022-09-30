@@ -1,0 +1,37 @@
+name: Master Workflow
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build-apk:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup JDK 11
+        uses: actions/setup-java@v2
+        with:
+          distribution: "zulu"
+          java-version: 11
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+      - name: Inflate Keystore
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > ./app/keystore.jks
+      - name: Set signing properties
+        run: |
+          echo "keystore.path=keystore.jks" > signing.properties
+          echo "keystore.password=${{ secrets.KEYSTORE_PASSWORD }}" >> signing.properties
+          echo "keystore.key.alias=darsad yar" >> signing.properties
+          echo "keystore.key.password=${{ secrets.KEYSTORE_PASSWORD }}" >> signing.properties
+      - name: Build APK
+        run: ./gradlew --no-daemon assembleRelease
+      - name: Print APK info
+        run: cat app/build/outputs/apk/original/release/output-metadata.json
+      - name: Export APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: darsadyar-apk
+          path: app/build/outputs/apk/original/release/app-original-release.apk
