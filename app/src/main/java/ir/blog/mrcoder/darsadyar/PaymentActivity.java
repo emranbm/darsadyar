@@ -58,7 +58,7 @@ public class PaymentActivity extends AppCompatActivity implements IabHelper.Quer
     }
 
     private void initPayment() {
-        iabHelper = new IabHelper(this, BuildConfig.ADAD_BASE64_KEY);
+        iabHelper = new IabHelper(this, "");
         iabHelper.startSetup(result -> {
             if (result.isFailure())
                 Toast.makeText(this, getString(R.string.problem_connecting_cafebazaar), Toast.LENGTH_LONG).show();

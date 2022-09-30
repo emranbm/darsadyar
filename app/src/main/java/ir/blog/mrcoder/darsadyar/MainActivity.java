@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ir.adad.client.Adad;
 import ir.blog.mrcoder.darsadyar.utils.PaymentHelper;
 
 public class MainActivity extends Activity {
@@ -33,8 +32,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Adad.initialize(getApplicationContext());
 
         setContentView(R.layout.activity_main);
 
@@ -333,11 +330,9 @@ public class MainActivity extends Activity {
     private void removeAdsIfPaid() {
         boolean isAdDisabled = PaymentHelper.IsAdDisabled(this);
         if (isAdDisabled) {
-            Adad.disableBannerAds();
             removeAdsIV.setVisibility(View.INVISIBLE);
         }
         else {
-            Adad.enableBannerAds();
             removeAdsIV.setVisibility(View.VISIBLE);
         }
     }

@@ -29,9 +29,9 @@ jobs:
       - name: Build APK
         run: ./gradlew --no-daemon assembleRelease
       - name: Print APK info
-        run: cat app/build/outputs/apk/original/release/output-metadata.json
+        run: cat app/build/outputs/apk/release/output-metadata.json
       - name: Export APK
         uses: actions/upload-artifact@v2
         with:
           name: darsadyar-apk
-          path: app/build/outputs/apk/original/release/app-original-release.apk
+          path: app/build/outputs/apk/release/app-release.apk

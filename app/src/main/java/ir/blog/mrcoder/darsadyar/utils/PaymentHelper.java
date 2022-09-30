@@ -1,17 +1,11 @@
 package ir.blog.mrcoder.darsadyar.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.function.Consumer;
-
 import ir.blog.mrcoder.darsadyar.R;
-import ir.blog.mrcoder.darsadyar.paymentUtils.IabHelper;
-import ir.blog.mrcoder.darsadyar.paymentUtils.IabResult;
 
 /**
  * Created by emran on 6/17/19.
