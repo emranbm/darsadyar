@@ -6,9 +6,6 @@ android {
     compileSdkVersion 33
     //buildToolsVersion "23.0.0 rc2"
 
-    lintOptions {
-        checkReleaseBuilds false
-    }
 
     defaultConfig {
         applicationId "ir.blog.mrcoder.darsadyar"
@@ -17,8 +14,26 @@ android {
         versionCode 9
         versionName "1.3"
     }
+    signingConfigs {
+        release {
+            file("../signing.properties").with { propFile ->
+                if (propFile.canRead()) {
+                    def properties = new Properties()
+                    properties.load(new FileInputStream(propFile))
+
+                    storeFile file(properties['keystore.path'])
+                    storePassword properties['keystore.password']
+                    keyAlias properties['keystore.key.alias']
+                    keyPassword properties['keystore.key.password']
+                } else {
+                    println 'Unable to read signing.properties'
+                }
+            }
+        }
+    }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -36,6 +51,10 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
+    lint {
+        checkReleaseBuilds false
+    }
+    namespace 'ir.blog.mrcoder.darsadyar'
 }
 
 def getAdadBase64Key() {
@@ -50,5 +69,4 @@ dependencies {
     implementation files('libs/adad-client-3.1.jar')
     implementation 'com.android.support:design:26.1.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'co.ronash.android:pushe-base:1.6.3'
 }
