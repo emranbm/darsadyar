@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import co.ronash.pushe.Pushe;
 import ir.adad.client.Adad;
 import ir.blog.mrcoder.darsadyar.utils.PaymentHelper;
 
@@ -44,8 +43,6 @@ public class MainActivity extends Activity {
         removeAdsIfPaid();
 
         setListeners();
-
-        Pushe.initialize(this,false);
     }
 
     private void initialize() {

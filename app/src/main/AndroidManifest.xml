@@ -54,7 +54,6 @@
         <meta-data
             android:name="AdadShowRemoveAds"
             android:value="false" />
-        <meta-data android:name="co.ronash.pushe.token" android:value="PUSHE_822843756492"/>
     </application>
 
 </manifest>
