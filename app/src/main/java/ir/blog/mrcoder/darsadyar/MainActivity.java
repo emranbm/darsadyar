@@ -1,6 +1,5 @@
 package ir.blog.mrcoder.darsadyar;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -17,7 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
 
     private TextView kolTV, nazadeTV, ghalatTV, dorostTV, resultTV, cautionTV;
     private EditText kolET, nazadeET, ghalatET, dorostET;
