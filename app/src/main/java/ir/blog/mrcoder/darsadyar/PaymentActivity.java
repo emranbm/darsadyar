@@ -85,11 +85,9 @@ public class PaymentActivity extends AppCompatActivity implements IabHelper.Quer
         if (result.isSuccess()) {
             String price = inv.getSkuDetails(SKU).getPrice();
             paymentBtn.setText(PersianReshape.reshape(getResources().getString(R.string.pay_price, price)));
-            final boolean hasPaid = inv.hasPurchase(SKU);
-            if (hasPaid) {
-                Toast.makeText(this, R.string.payment_successful, Toast.LENGTH_LONG).show();
-                finish();
-            }
+            Purchase purchase = inv.getPurchase(SKU);
+            if (purchase != null)
+                iabHelper.consumeAsync(purchase, null);
         } else
             Toast.makeText(this, R.string.error_querying_inventory, Toast.LENGTH_LONG).show();
     }
