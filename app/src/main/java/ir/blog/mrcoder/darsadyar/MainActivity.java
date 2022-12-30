@@ -323,6 +323,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onMenuBtnClicked(View view) {
-        openOptionsMenu();
+        BaseInputConnection  mInputConnection = new BaseInputConnection( findViewById(R.id.kolET), true);
+        KeyEvent kd = new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MENU);
+        KeyEvent ku = new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_MENU);
+        mInputConnection.sendKeyEvent(kd);
+        mInputConnection.sendKeyEvent(ku);
     }
 }
