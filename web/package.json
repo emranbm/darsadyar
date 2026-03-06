@@ -1,0 +1,18 @@
+{
+  "name": "darsadyar.ir",
+  "version": "0.1.0",
+  "description": "DarsadYar",
+  "keywords": [
+    "darsadyar"
+  ],
+  "license": "ISC",
+  "author": "Mr. Coder",
+  "type": "commonjs",
+  "main": " ",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "r1ec": "^0.8.0"
+  }
+}
