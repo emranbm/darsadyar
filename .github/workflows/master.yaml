@@ -39,3 +39,23 @@ jobs:
         with:
           name: darsadyar-apk
           path: android/app/build/outputs/apk/release/app-release.apk
+
+  deploy-web:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+      - working-directory: ./web/
+        run: npm install --include=dev
+      - working-directory: ./web/
+        run: node .ci/build.js
+      - working-directory: ./web/
+        run: npx r1ec login -m ${{ secrets.ARVANCLOUD_API_KEY }}
+      - uses: actions/upload-artifact@v7
+        with:
+          name: darsadyar-js
+          path: web/app.js
