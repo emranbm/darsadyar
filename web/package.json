@@ -13,6 +13,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "nunjucks": "^3.2.4",
     "r1ec": "^0.8.0"
   }
 }

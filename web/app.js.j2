@@ -1,0 +1,28 @@
+'use strict';
+
+const CSS = `{{ style }}`;
+const HTML = `{{ html }}`;
+
+addEventListener("fetch", (event) => {
+    event.respondWith(handleRequest(event.request));
+});
+
+
+async function handleRequest(request) {
+    // If request is for style.css, serve the raw CSS
+    if (/style\.css$/.test(request.url)) {
+        return new Response(CSS, {
+            headers: {
+                "content-type": "text/css",
+            },
+        });
+    } else {
+        // Serve raw HTML using Early Hints for the CSS file
+        return new Response(HTML, {
+            headers: {
+                "content-type": "text/html",
+                link: "</style.css>; rel=preload; as=style",
+            },
+        });
+    }
+}

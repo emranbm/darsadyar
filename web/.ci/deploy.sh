@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
-npx r1ec deploy darsadyar -f arvan-edge.js
+node ./.ci/build.js
+https_proxy="" HTTPS_PROXY="" npx r1ec deploy darsadyar -f app.js
