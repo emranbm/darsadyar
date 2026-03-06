@@ -19,19 +19,23 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
       - name: Inflate Keystore
+        working-directory: ./android/
         run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > ./app/keystore.jks
       - name: Set signing properties
+        working-directory: ./android/
         run: |
           echo "keystore.path=keystore.jks" > signing.properties
           echo "keystore.password=${{ secrets.KEYSTORE_PASSWORD }}" >> signing.properties
           echo "keystore.key.alias=darsad yar" >> signing.properties
           echo "keystore.key.password=${{ secrets.KEYSTORE_PASSWORD }}" >> signing.properties
       - name: Build APK
+        working-directory: ./android/
         run: ./gradlew --no-daemon assembleRelease
       - name: Print APK info
+        working-directory: ./android/
         run: cat app/build/outputs/apk/release/output-metadata.json
       - name: Export APK
         uses: actions/upload-artifact@v7
         with:
           name: darsadyar-apk
-          path: app/build/outputs/apk/release/app-release.apk
+          path: android/app/build/outputs/apk/release/app-release.apk
