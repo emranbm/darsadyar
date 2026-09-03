@@ -1,60 +1,68 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
 
 android {
-    compileSdkVersion 33
-    //buildToolsVersion "23.0.0 rc2"
-
+    namespace 'ir.blog.mrcoder.darsadyar'
+    compileSdk 35
 
     defaultConfig {
         applicationId "ir.blog.mrcoder.darsadyar"
-        minSdkVersion 21
-        targetSdkVersion 33
+        minSdk 21
+        targetSdk 35
         versionCode 10
         versionName "1.4"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     signingConfigs {
         release {
-            file("../signing.properties").with { propFile ->
-                if (propFile.canRead()) {
-                    def properties = new Properties()
-                    properties.load(new FileInputStream(propFile))
+            def propFile = file("../signing.properties")
+            if (propFile.canRead()) {
+                def properties = new Properties()
+                properties.load(new FileInputStream(propFile))
 
-                    storeFile file(properties['keystore.path'])
-                    storePassword properties['keystore.password']
-                    keyAlias properties['keystore.key.alias']
-                    keyPassword properties['keystore.key.password']
-                } else {
-                    println 'Unable to read signing.properties'
-                }
+                storeFile file(properties['keystore.path'])
+                storePassword properties['keystore.password']
+                keyAlias properties['keystore.key.alias']
+                keyPassword properties['keystore.key.password']
+            } else {
+                println 'Unable to read signing.properties'
             }
         }
     }
+
     buildTypes {
         release {
             signingConfig signingConfigs.release
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
-    flavorDimensions "default"
-
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
+
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
     lint {
         checkReleaseBuilds false
     }
-    namespace 'ir.blog.mrcoder.darsadyar'
 }
 
 dependencies {
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 }
