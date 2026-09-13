@@ -9,10 +9,10 @@ android {
 
     defaultConfig {
         applicationId "ir.blog.mrcoder.darsadyar"
-        minSdkVersion 24
+        minSdkVersion 28
         targetSdkVersion 33
-        versionCode 11
-        versionName "1.5"
+        versionCode 12
+        versionName "1.6"
     }
     signingConfigs {
         release {
